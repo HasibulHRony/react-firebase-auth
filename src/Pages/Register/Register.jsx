@@ -1,19 +1,35 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import React from 'react';
+// import { createUserWithEmailAndPassword } from 'firebase/auth';
+import React, { use } from 'react';
 import { Link } from 'react-router';
 import { auth } from '../../../firebase.init';
+import { AuthContext } from '../../Context/AuthContext/AuthContext';
 
 const Register = () => {
 
-    const handleRegisterAccount = (event) =>{
+    const { createUser } = use(AuthContext)
+
+    const handleRegisterAccount = (event) => {
         event.preventDefault()
         const email = event.target.email.value;
         const password = event.target.password.value;
-        createUserWithEmailAndPassword(auth, email, password)
-        .then(user=>console.log(user.user))
-        .catch(error=>console.log(error.message))
-        console.log(email, password)
+        createUser(email, password)
+        .then(result=>{
+            console.log(result)
+        })
+        .catch(error=>{
+            console.log(error)
+        })
     }
+
+    // const handleRegisterAccount = (event) =>{
+    //     event.preventDefault()
+    //     const email = event.target.email.value;
+    //     const password = event.target.password.value;
+    //     createUserWithEmailAndPassword(auth, email, password)
+    //     .then(user=>console.log(user.user))
+    //     .catch(error=>console.log(error.message))
+    //     console.log(email, password)
+    // }
 
     return (
         <div className="hero bg-base-200 min-h-screen">
