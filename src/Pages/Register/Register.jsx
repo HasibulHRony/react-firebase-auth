@@ -14,7 +14,7 @@ const Register = () => {
         const password = event.target.password.value;
         createUser(email, password)
         .then(result=>{
-            console.log(result)
+            console.log(result.user)
         })
         .catch(error=>{
             console.log(error)
