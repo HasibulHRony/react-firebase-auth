@@ -7,14 +7,22 @@ const NavBar = () => {
 
     const { user, signOutUser } = use(AuthContext)
 
-    const handleSignOut = () =>{
+    const handleSignOut = () => {
         signOutUser()
+            .then(console.log("sign out successful "))
+            .catch(error => console.log(error))
     }
 
     const links = <>
         <li><NavLink to={'/'}>Home</NavLink></li>
         <li><NavLink to={'/register'}>Register</NavLink></li>
         <li><NavLink to={'/login'}>LogIn</NavLink></li>
+        {
+            user && <>
+                <li><NavLink to={'/orders'}>Orders</NavLink></li>
+                <li><NavLink to={'/profile'}>Profile</NavLink></li>
+            </>
+        }
     </>
 
 
