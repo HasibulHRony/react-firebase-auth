@@ -7,22 +7,27 @@ import { onAuthStateChanged } from 'firebase/auth';
 export default function AuthProvider({ children }) {
 
     const [user, setUser] = useState(null)
+    const [loading, setLoading] = useState(true)
 
     const createUser = (email, password) => {
+        setLoading(true)
         return createUserWithEmailAndPassword(auth, email, password)
     }
 
     const signInUser = (email, password) => {
+        setLoading(true)
         return signInWithEmailAndPassword(auth, email, password)
     };
 
     const signOutUser = () =>{
+        setLoading(true)
         return signOut(auth)
     }
 
     useEffect(()=>{
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-        setUser(currentUser)
+            setUser(currentUser)
+            setLoading(false)
         return ()=> unsubscribe();
     })
     }, [])
@@ -32,7 +37,9 @@ export default function AuthProvider({ children }) {
         signInUser,
         user,
         setUser,
-        signOutUser
+        signOutUser,
+        loading,
+        setLoading,
     }
 
     return (
